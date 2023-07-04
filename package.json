@@ -1,13 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "react-scripts build",
-    "dev":"nodemon server/expressApp.js"
+    "dev": "nodemon server/expressApp.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +16,15 @@
     "hbs": "^4.2.0",
     "mongoose": "^7.3.0",
     "nodemon": "^2.0.22"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RedwanAhmedTapu/BackEnd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RedwanAhmedTapu/BackEnd/issues"
+  },
+  "homepage": "https://github.com/RedwanAhmedTapu/BackEnd#readme",
+  "description": ""
 }

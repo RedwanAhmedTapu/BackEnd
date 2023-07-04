@@ -10,7 +10,7 @@ require("../db/connect");
 app.use(cors());
 app.use(
   cors({
-    origin: "https://localhost:3000",
+    origin: "https://infinityshop.onrender.com",
   })
 );
 app.use(
@@ -48,7 +48,7 @@ app.post("/newProduct", async (req, res) => {
       .then((product) => {
         if (product) {
           console.log("product already added");
-          res.send("product already exist");
+          res.status(200).send("product already exist");
         } else {
           const {
             Id,
@@ -84,7 +84,7 @@ app.post("/newProduct", async (req, res) => {
           });
           console.log(newProduct);
           newProduct.save();
-          res.send("successful");
+          res.status(200).send("successful");
         }
       })
       .catch((err) => {
@@ -102,7 +102,7 @@ app.get("/products", async (req, res) => {
     const userData = await Product.find()
       .then((product) => {
         console.log(product);
-        res.json(product);
+        res.status(200).json(product);
       })
       .catch((err) => {
         console.error("Failed to fetch products:", err);
@@ -123,7 +123,7 @@ app.get("/:id", async (req, res) => {
       .exec()
       .then((product) => {
         if (product) {
-          res.json(product);
+          res.status(200).json(product);
         } else {
         }
       })
@@ -147,7 +147,7 @@ app.patch("/update/:id", async (req, res) => {
       .exec()
       .then((product) => {
         if (product) {
-          res.send(`updated product with ID: ${Id}`);
+          res.status(200).send(`updated product with ID: ${Id}`);
         } else {
           res.status(404).send(`Product with ID: ${Id} not found`);
         }
@@ -170,7 +170,7 @@ app.delete("/delete/:id", async (req, res) => {
       .exec()
       .then((product) => {
         if (product) {
-          res.send(`Deleted product with ID: ${Id}`);
+          res.status(200).send(`Deleted product with ID: ${Id}`);
         } else {
           res.status(404).send(`Product with ID: ${Id} not found`);
         }
@@ -193,7 +193,7 @@ app.post("/orders", async (req, res) => {
       .then((user) => {
         if (user) {
           console.log("order already exist");
-          res.send("order already exist");
+          res.status(200).send("order already exist");
         } else {
           const order = new Order(orderData);
           order.save();
@@ -217,7 +217,7 @@ app.get("/order/:phnNumber", async (req, res) => {
       .exec()
       .then((order) => {
         if (order) {
-          res.json(order);
+          res.status(200).json(order);
         } else {
         }
       })
@@ -239,7 +239,7 @@ app.get("/ordered/:email", async (req, res) => {
       .exec()
       .then((order) => {
         if (order) {
-          res.json(order);
+          res.status(200).json(order);
         } else {
         }
       })
@@ -279,9 +279,9 @@ app.post("/register", async (req, res) => {
               description: req.body.description,
             });
             registerEmployee.save();
-            res.send("successful");
+            res.status(404).send("successful");
           } else {
-            res.send("passwords are not matching");
+            res.status(404).send("passwords are not matching");
           }
         }
       })
@@ -301,11 +301,11 @@ app.post("/loguser", async (req, res) => {
     // User found, return success message or token
     if (password === userData.password && email === userData.email) {
       console.log("login successfull");
-      res.send({ message: "login successful", Register: Register });
+      res.status(200).send({ message: "login successful", Register: Register });
     } else {
-      res.send({ message: "password doesn't match " });
+      res.status(404).send({ message: "password doesn't match " });
     }
-    res.status(200).json({ message: "Login successful" });
+   
   } else {
     // User not found, return error message or handle error condition
     res.status(401).json({ error: "Invalid credentials" });
@@ -324,7 +324,7 @@ app.get("/user/:email", async (req, res) => {
       .then((product) => {
         if (product) {
           console.log(product);
-          res.json(product);
+          res.status(200).json(product);
         } else {
         }
       })
