@@ -96,27 +96,27 @@ app.post("/newProduct", async (req, res) => {
   }
 });
 //for getting all products
-// app.get("/products", async (req, res) => {
-//   // res.sendFile(path.join(__dirname, "../public/index.html"));
-//   // res.render(path.join(__dirname, "../views/pages/express.hbs"));
-//   try {
-//     const userData = await Product.find()
-//       .then((product) => {
-//         if(product){
-//         console.log(product);
-//         res.status(200).json(product);}
-//         else{
-//           res.status(200).send("no products to show");
-//         }
-//       })
-//       .catch((err) => {
-//         console.error("Failed to fetch products:", err);
-//         res.status(500).send("Failed to fetch products");
-//       });
-//   } catch (error) {
-//     res.status(404).send("error");
-//   }
-// });
+app.get("/products", async (req, res) => {
+  // res.sendFile(path.join(__dirname, "../public/index.html"));
+  // res.render(path.join(__dirname, "../views/pages/express.hbs"));
+  try {
+    const userData = await Product.find()
+      .then((product) => {
+        if(product){
+        console.log(product);
+        res.status(200).json(product);}
+        else{
+          res.status(200).send("no products to show");
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch products:", err);
+        res.status(500).send("Failed to fetch products");
+      });
+  } catch (error) {
+    res.status(404).send("error");
+  }
+});
 //for getting singleproduct
 app.get("/:id", async (req, res) => {
   // res.sendFile(path.join(__dirname, "../public/index.html"));

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-
+const URL=process.env.MONGODB_URL;
 mongoose
-  .connect("mongodb://localhost:27017/ecomsiteRegistration", {
+  .connect(URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
