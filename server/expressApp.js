@@ -4,6 +4,7 @@ const path = require("path");
 const Register = require("../models/register");
 const Product = require("../models/productSchema");
 const Order = require("../models/orderSchema");
+require("dotenv").config();
 const { error } = require("console");
 const app = express();
 
@@ -30,7 +31,7 @@ app.use(
   })
 );
 
-const port = 4000;
+const port =process.env.PORT || 4000;
 
 // const static_path = path.join(__dirname, "../public");
 // app.use(express.static(static_path));
