@@ -4,6 +4,7 @@ const path = require("path");
 const Register = require("../models/register");
 const Product = require("../models/productSchema");
 const Order = require("../models/orderSchema");
+const { error } = require("console");
 const app = express();
 
 require("../db/connect");
@@ -44,7 +45,7 @@ app.post("/newProduct", async (req, res) => {
   try {
     const { Id } = req.body;
     const userData = await Product.findOne({ Id: Id })
-      .exec()
+     
       .then((product) => {
         if (product) {
           console.log("product already added");
@@ -88,7 +89,7 @@ app.post("/newProduct", async (req, res) => {
         }
       })
       .catch((err) => {
-        res.status(404).send("error");
+        res.status(404).send(err);
       });
   } catch (error) {
     res.status(404).send("error");
@@ -120,11 +121,12 @@ app.get("/:id", async (req, res) => {
   console.log(Id);
   try {
     const userData = await Product.findOne({ Id: Id })
-      .exec()
+      
       .then((product) => {
         if (product) {
           res.status(200).json(product);
         } else {
+          res.status(200).send("not any signeproduct with this id");
         }
       })
       .catch((err) => {
@@ -144,7 +146,7 @@ app.patch("/update/:id", async (req, res) => {
   console.log(updatedProduct);
   try {
     const result = await Product.updateOne({ Id: Id }, { $set: updatedProduct })
-      .exec()
+      
       .then((product) => {
         if (product) {
           res.status(200).send(`updated product with ID: ${Id}`);
@@ -155,7 +157,7 @@ app.patch("/update/:id", async (req, res) => {
       .catch((err) => {
         res.status(404).send(err);
       });
-  } catch (error) {
+  } catch {
     res.status(404).send("error");
   }
 });
@@ -167,7 +169,7 @@ app.delete("/delete/:id", async (req, res) => {
   // console.log(Id);
   try {
     const result = await Product.deleteOne({ Id: Id })
-      .exec()
+      
       .then((product) => {
         if (product) {
           res.status(200).send(`Deleted product with ID: ${Id}`);
@@ -178,7 +180,7 @@ app.delete("/delete/:id", async (req, res) => {
       .catch((err) => {
         res.status(404).send(err);
       });
-  } catch (error) {
+  } catch  {
     res.status(404).send("error");
   }
 });
@@ -189,7 +191,7 @@ app.post("/orders", async (req, res) => {
     const orderData = req.body;
     const { phoneNumber } = req.body;
     const userData = await Order.findOne({ phoneNumber: phoneNumber })
-      .exec()
+      
       .then((user) => {
         if (user) {
           console.log("order already exist");
@@ -202,7 +204,7 @@ app.post("/orders", async (req, res) => {
       .catch((err) => {
         res.status(404).send("error");
       });
-  } catch (err) {
+  } catch {
     res.status(404).send("error");
   }
 });
@@ -214,17 +216,18 @@ app.get("/order/:phnNumber", async (req, res) => {
   console.log(phnNumber);
   try {
     const userData = await Order.findOne({ phoneNumber: phnNumber })
-      .exec()
+    
       .then((order) => {
         if (order) {
           res.status(200).json(order);
         } else {
+          res.status(200).send("not any order");
         }
       })
       .catch((err) => {
         res.status(404).send(err);
       });
-  } catch (error) {
+  } catch {
     res.status(404).send("error");
   }
 });
@@ -241,12 +244,13 @@ app.get("/ordered/:email", async (req, res) => {
         if (order) {
           res.status(200).json(order);
         } else {
+          res.status(200).send("not any order");
         }
       })
       .catch((err) => {
         res.status(404).send(err);
       });
-  } catch (error) {
+  } catch {
     res.status(404).send("error");
   }
 });
@@ -257,18 +261,18 @@ app.post("/register", async (req, res) => {
   // res.render(path.join(__dirname, "../views/pages/express.hbs"));
   try {
     // const password = req.body.password;
-    const confirmpasssword = req.body.confirmpassword;
+    // const confirmpasssword = req.body.confirmpassword;
     // console.log(password);
     console.log(confirmpasssword);
     const { email, password } = req.body;
     const userData = await Register.findOne({ email: email })
-      .exec()
+
       .then((user) => {
         if (user) {
           console.log("user already exist");
           res.send("user already exist");
         } else {
-          if (password === confirmpasssword) {
+         
             const registerEmployee = new Register({
               image: req.body.image,
               username: req.body.username,
@@ -280,35 +284,43 @@ app.post("/register", async (req, res) => {
             });
             registerEmployee.save();
             res.status(404).send("successful");
-          } else {
-            res.status(404).send("passwords are not matching");
-          }
+         
         }
       })
       .catch((err) => {
         res.status(404).send("error");
       });
-  } catch (error) {
+  } catch  {
     res.status(404).send("error");
   }
 });
 //for being logged by user
 app.post("/loguser", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const userData = await Register.findOne({ email, password });
-  if (userData) {
-    // User found, return success message or token
-    if (password === userData.password && email === userData.email) {
-      console.log("login successfull");
-      res.status(200).send({ message: "login successful", Register: Register });
-    } else {
-      res.status(404).send({ message: "password doesn't match " });
-    }
-   
-  } else {
-    // User not found, return error message or handle error condition
-    res.status(401).json({ error: "Invalid credentials" });
+    const userData = await Register.findOne({ email:email,password:password })
+
+      .then((user) => {
+        if (user) {
+          
+          
+            console.log("login successfull");
+            res.send(user);
+            res
+              .status(200)
+              .send({ message: "login successful", Register: Register });
+        
+        } else {
+          // User not found, return error message or handle error condition
+          res.status(401).json({ error: "Invalid credentials" });
+        }
+      })
+      .catch((err) => {
+        res.status(404).send(err);
+      });
+  } catch {
+    res.status(404).send(error);
   }
 });
 
@@ -326,12 +338,13 @@ app.get("/user/:email", async (req, res) => {
           console.log(product);
           res.status(200).json(product);
         } else {
+          res.status(200).send("not any user");
         }
       })
       .catch((err) => {
         res.status(404).send(err);
       });
-  } catch (error) {
+  } catch  {
     res.status(404).send("error");
   }
 });
