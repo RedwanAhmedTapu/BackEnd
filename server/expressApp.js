@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const helmet=require("helmet");
 const path = require("path");
 const Register = require("../models/register");
 const Product = require("../models/productSchema");
@@ -10,26 +11,27 @@ const app = express();
 
 require("../db/connect");
 app.use(cors());
-app.use(
-  cors({
-    origin: "https://infinityshop.onrender.com",
-  })
-);
-app.use(
-  cors({
-    methods: ["GET", "POST", "PUT"],
-  })
-);
-app.use(
-  cors({
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+app.use(helmet());
+// app.use(
+//   cors({
+//     origin: "https://infinityshop.onrender.com",
+//   })
+// );
+// app.use(
+//   cors({
+//     methods: ["GET", "POST", "PUT"],
+//   })
+// );
+// app.use(
+//   cors({
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+// app.use(
+//   cors({
+//     credentials: true,
+//   })
+// );
 
 const port =process.env.PORT || 4000;
 
