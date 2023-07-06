@@ -158,7 +158,7 @@ app.patch("/update/:id", async (req, res) => {
         if (product) {
           res.status(200).send(`updated product with ID: ${Id}`);
         } else {
-          res.status(404).send(`Product with ID: ${Id} not found`);
+          res.status(200).send(`Product with ID: ${Id} not found`);
         }
       })
       .catch((err) => {
@@ -181,7 +181,7 @@ app.delete("/delete/:id", async (req, res) => {
         if (product) {
           res.status(200).send(`Deleted product with ID: ${Id}`);
         } else {
-          res.status(404).send(`Product with ID: ${Id} not found`);
+          res.status(200).send(`Product with ID: ${Id} not found`);
         }
       })
       .catch((err) => {
