@@ -102,8 +102,12 @@ app.get("/products", async (req, res) => {
   try {
     const userData = await Product.find()
       .then((product) => {
+        if(product){
         console.log(product);
-        res.status(200).json(product);
+        res.status(200).json(product);}
+        else{
+          res.status(200).send("no products to show");
+        }
       })
       .catch((err) => {
         console.error("Failed to fetch products:", err);
