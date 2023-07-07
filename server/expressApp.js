@@ -12,26 +12,26 @@ const app = express();
 require("../db/connect");
 // app.use(cors());
 // app.use(helmet());
-// app.use(
-//   cors({
-//     origin: "https://infinityshop.onrender.com",
-//   })
-// );
-// app.use(
-//   cors({
-//     methods: ["GET", "POST", "PUT"],
-//   })
-// );
-// app.use(
-//   cors({
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
-// app.use(
-//   cors({
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: "https://infinityshop.onrender.com",
+  })
+);
+app.use(
+  cors({
+    methods: ["GET", "POST", "PUT"],
+  })
+);
+app.use(
+  cors({
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT,PATCH, DELETE');
