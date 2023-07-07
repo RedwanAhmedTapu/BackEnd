@@ -10,7 +10,7 @@ const { error } = require("console");
 const app = express();
 
 require("../db/connect");
-// app.use(cors());
+app.use(cors());
 app.use(helmet());
 app.use(
   cors({
