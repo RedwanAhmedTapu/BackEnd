@@ -274,18 +274,18 @@ app.post("/register", async (req, res) => {
   // res.render(path.join(__dirname, "../views/pages/express.hbs"));
   try {
     // const password = req.body.password;
-    // const confirmpasssword = req.body.confirmpassword;
+    const confirmpasssword = req.body.confirmpassword;
     // console.log(password);
     console.log(confirmpasssword);
     const { email, password } = req.body;
     const userData = await Register.findOne({ email: email })
-
+      .exec()
       .then((user) => {
         if (user) {
           console.log("user already exist");
           res.send("user already exist");
         } else {
-         
+          if (password === confirmpasssword) {
             const registerEmployee = new Register({
               image: req.body.image,
               username: req.body.username,
@@ -296,14 +296,16 @@ app.post("/register", async (req, res) => {
               description: req.body.description,
             });
             registerEmployee.save();
-            res.status(404).send("successful");
-         
+            res.send("successful");
+          } else {
+            res.send("passwords are not matching");
+          }
         }
       })
       .catch((err) => {
         res.status(404).send("error");
       });
-  } catch  {
+  } catch (error) {
     res.status(404).send("error");
   }
 });
