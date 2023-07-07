@@ -322,14 +322,15 @@ app.post("/loguser", async (req, res) => {
       .then((user) => {
         if (user) {
           
-          
+         
             console.log("login successfull");
-            res.send(user);
+            res.status(200).json(user);
             // res.redirect('/userDashboard');
            
         
         } else {
           // User not found, return error message or handle error condition
+          res.status(200).json("give not access");
           res.status(200).json("not any user");
         }
       })
