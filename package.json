@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm i",
-    "dev": "nodemon server/expressApp.js"
+    "dev": "node server/expressApp.js"
   },
   "keywords": [],
   "author": "",
