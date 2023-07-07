@@ -297,6 +297,7 @@ app.post("/register", async (req, res) => {
             });
             registerEmployee.save();
             res.send("successful");
+            res.redirect('/login');
           } else {
             res.send("passwords are not matching");
           }
@@ -322,9 +323,8 @@ app.post("/loguser", async (req, res) => {
           
             console.log("login successfull");
             res.send(user);
-            res
-              .status(200)
-              .send({ message: "login successful", Register: Register });
+            res.redirect('/userDashboard');
+           
         
         } else {
           // User not found, return error message or handle error condition
