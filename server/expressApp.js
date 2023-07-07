@@ -212,6 +212,7 @@ app.post("/orders", async (req, res) => {
         } else {
           const order = new Order(orderData);
           order.save();
+          res.redirect(`/userOrderData?userNumber=${phoneNumber}`);
         }
       })
       .catch((err) => {
