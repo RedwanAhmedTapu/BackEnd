@@ -328,7 +328,7 @@ app.post("/loguser", async (req, res) => {
         
         } else {
           // User not found, return error message or handle error condition
-          res.status(401).json({ error: "Invalid credentials" });
+          res.status(200).json("not any user");
         }
       })
       .catch((err) => {
