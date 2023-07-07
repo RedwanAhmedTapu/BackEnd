@@ -10,11 +10,11 @@ const { error } = require("console");
 const app = express();
 
 require("../db/connect");
-app.use(cors());
+// app.use(cors());
 app.use(helmet());
 app.use(
   cors({
-    origin: "https://infinityshop.onrender.com/",
+    origin: "https://infinityshop.onrender.com",
   })
 );
 app.use(
