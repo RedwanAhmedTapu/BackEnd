@@ -48,6 +48,7 @@ const port =process.env.PORT || 4000;
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
+
 app.post("/newProduct", async (req, res) => {
   // res.sendFile(path.join(__dirname, "../public/index.html"));
   // res.render(path.join(__dirname, "../views/pages/express.hbs"));
@@ -212,7 +213,7 @@ app.post("/orders", async (req, res) => {
         } else {
           const order = new Order(orderData);
           order.save();
-          res.redirect(`/userOrderData?userNumber=${phoneNumber}`);
+          // res.redirect(`/userOrderData?userNumber=${phoneNumber}`);
         }
       })
       .catch((err) => {
@@ -298,7 +299,7 @@ app.post("/register", async (req, res) => {
             });
             registerEmployee.save();
             res.send("successful");
-            res.redirect('/login');
+            // res.redirect('/login');
           } else {
             res.send("passwords are not matching");
           }
@@ -324,7 +325,7 @@ app.post("/loguser", async (req, res) => {
           
             console.log("login successfull");
             res.send(user);
-            res.redirect('/userDashboard');
+            // res.redirect('/userDashboard');
            
         
         } else {
