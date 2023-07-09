@@ -7,6 +7,7 @@ const Product = require("../models/productSchema");
 const Order = require("../models/orderSchema");
 require("dotenv").config();
 const { error } = require("console");
+const ChatMessage=require("../models/chatMessage");
 const app = express();
 
 require("../db/connect");
@@ -330,7 +331,7 @@ app.post("/loguser", async (req, res) => {
         
         } else {
           // User not found, return error message or handle error condition
-          res.status(200).json("give not access");
+         
           res.status(200).json("not any user");
         }
       })
@@ -366,6 +367,38 @@ app.get("/user/:email", async (req, res) => {
     res.status(404).send("error");
   }
 });
+
+
+
+
+
+
+
+// API endpoint to get all chat messages
+app.get('/messages', async (req, res) => {
+  try {
+    const messages = await ChatMessage.find();
+    res.json(messages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// API endpoint to create a new chat message
+app.post('/messages', async (req, res) => {
+  try {
+    const { user, message } = req.body;
+    const newMessage = new ChatMessage({ user, message });
+    await newMessage.save();
+    res.status(201).json(newMessage);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
