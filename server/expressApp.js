@@ -375,7 +375,7 @@ app.get("/user/:email", async (req, res) => {
 
 
 // API endpoint to get all chat messages
-app.get('/messages', async (req, res) => {
+app.get('/user/messages', async (req, res) => {
   try {
     const messages = await ChatMessage.find();
     res.json(messages);
