@@ -388,8 +388,8 @@ app.get('/review/messages', async (req, res) => {
 // API endpoint to create a new chat message
 app.post('/messages', async (req, res) => {
   try {
-    const { user, message } = req.body;
-    const newMessage = new ChatMessage({ user, message });
+    const {image, user, message } = req.body;
+    const newMessage = new ChatMessage({image, user, message });
     await newMessage.save();
     res.status(201).json(newMessage);
   } catch (error) {
