@@ -160,7 +160,7 @@ app.patch("/update/:id", async (req, res) => {
   console.log(Id);
   console.log(updatedProduct);
   try {
-    const result = await Product.updateOne({ Id: Id }, { $set: updatedProduct })
+    const result = await Product.updateOne({ Id: Id }, { $set: updatedProduct },{new:true})
       
       .then((product) => {
         if (product) {
